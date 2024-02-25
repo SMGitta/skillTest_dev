@@ -4,7 +4,7 @@
         <http:listener-connection host="${http.host}" port="${http.port}" />
     </http:listener-config>
     <apikit:config name="hr-papi-config" api="hr-papi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <configuration-properties doc:name="Configuration properties" doc:id="74232b9b-eafe-4bd2-9d76-f916882dfcff" file="properties/local.properties" />
+    <configuration-properties doc:name="Configuration properties" doc:id="74232b9b-eafe-4bd2-9d76-f916882dfcff" file="properties/${env}.properties" />
     <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="7ae4f375-3f27-4608-898e-c72e36121378" />
     <configuration doc:name="Configuration" doc:id="e90466c7-eff7-42d5-9e80-f695ea0f9068" defaultErrorHandler-ref="globalerrorhandlerError_Handler" />
 	<flow name="hr-papi-main">
