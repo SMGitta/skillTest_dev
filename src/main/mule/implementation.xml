@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="patchflow" doc:id="f28b413b-330f-4fba-9f62-308355fe28e8" >
+		<logger level="INFO" doc:name="Logger" doc:id="294bbda5-1758-4843-9e4d-8796dc91aa1b" message="Request received in patch flow of hrpapi"/>
+		<ee:transform doc:name="Transform Message" doc:id="b2ed5672-4687-43a8-bb73-15ea4d777015" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="empId" ><![CDATA[attributes.uriParams.'empId']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="PATCH" doc:name="Request" doc:id="a1830c65-d737-4d7d-8d9d-dc0c7d24d260" config-ref="HTTP_Request_configuration" url="${hrsapi.host}/${hrsapi.path}/{empId}" >
+			<http:uri-params ><![CDATA[#[output application/json
+---
+{
+	"empId": vars.empId
+}]]]></http:uri-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="9c022d9e-4723-4c66-8d9b-a295903f1856" message="response received from hrsapi for update customer"/>
+	</sub-flow>
+	<sub-flow name="postflow" doc:id="365a07d1-49f4-4502-9d9a-8b04b1b21867" >
+		<logger level="INFO" doc:name="Logger" doc:id="f0af1237-22b8-48c8-b6c6-e3b52c40a29d" message="Sending request to HRsapi "/>
+		<http:request method="POST" doc:name="Request" doc:id="4c7f345b-d02d-404b-962d-6c0e762bcc3f" config-ref="HTTP_Request_configuration" url="${hrsapi.host}/${hrsapi.path}" >
+			<http:headers ><![CDATA[#[output application/json
+---
+{
+	"role": attributes.headers.role
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="e2176945-a77c-4f46-abf5-de750d04133b" message="response received from HRsapi" />
+	</sub-flow>
+	<sub-flow name="deleteflow" doc:id="d3ab2beb-532b-457c-98ff-b0afd4f13630" >
+		<logger level="INFO" doc:name="Logger" doc:id="e79dbe30-cb40-4f8a-9ee8-f77aa907d99f" message="Received request in delete flow of hrpapi"/>
+		<ee:transform doc:name="Transform Message" doc:id="7de4abb4-a955-4f7e-94fe-a089b9ef5b2e">
+			<ee:message>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="empId" ><![CDATA[attributes.uriParams.'empId']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="DELETE" doc:name="Request" doc:id="494c11cb-62ac-4b0d-b96f-703cc61ab6be" config-ref="HTTP_Request_configuration" url="${hrsapi.host}/${hrsapi.path}/{empId}" >
+			<http:headers ><![CDATA[#[output application/json
+---
+{
+	"role": attributes.headers.role,
+	//"Authorization": "Basic dGVzdDp0ZXN0"
+	"Authorization":attributes.headers.Authorization
+	}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/json
+---
+{
+	"empId": vars.empId
+}]]]></http:uri-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="b76f11f5-b788-4b74-8fae-2e9b4ecff274" message="Response received rom hrsapi for offboard staff"/>
+	</sub-flow>
+</mule>

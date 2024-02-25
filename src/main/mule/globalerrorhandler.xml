@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="globalerrorhandlerError_Handler" doc:id="da0c29e3-6afc-4391-86b8-ed54c55e10d7" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="6e6516ad-c390-4e99-9ffa-f8ad849c12b2" type="HTTP:TIMEOUT">
+			<logger level="INFO" doc:name="Logger" doc:id="64084878-5252-4249-b3ae-d1c0ef68421d" message="Timeout exceeded"/>
+			<ee:transform doc:name="Transform Message" doc:id="b136a441-1d32-4104-b72d-15698f555c69" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Timeout exceeded"
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0c6e8802-dded-417b-970c-18c3335662c1" type="APIKIT:NOT_FOUND">
+			<ee:transform doc:name="Transform Message" doc:id="22f76b2f-7087-4702-a30a-8207e363e950" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Resource Not Found"
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ad655f65-3d6d-423e-944d-6304c2be1f31" type="APIKIT:BAD_REQUEST">
+			<ee:transform doc:name="Transform Message" doc:id="cbec89e2-6349-40b4-a976-d8695500787a" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "BAD REQUEST",
+	"description": error.description,
+	"type": error.errorType,
+	"error_message":error.errorMessage
+
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="980586dc-565c-48cb-bfce-5e4f1a6ecd0e" type="ANY">
+			<ee:transform doc:name="Transform Message" doc:id="6ec66927-ba56-4c71-9124-8ffc32a1b447">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"description": error.description,
+	"type": error.errorType,
+	"message":error.errorMessage
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+</mule>

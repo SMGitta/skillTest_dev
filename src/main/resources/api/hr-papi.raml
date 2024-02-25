@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: HR-papi
+description: This API is used to HR system to perform specific operations
+version: 1.0
+protocols:
+  - HTTP
+  - HTTPS
+mediaType: 
+  - application/json
+securitySchemes:
+  basic:
+    description:  This API supports Basic Authentication
+    type: Basic Authentication
+
+/staff:
+  post:
+    securedBy: basic
+    headers:
+      role:
+        enum:
+          - recruiter
+          - HR
+    description: This endpoint is used to create a record
+    body:
+      application/json:
+        type: !include Types/createType.raml
+    responses:
+      201:
+        body:
+          example: {"message": "record created successfully"}
+  /{empId}:
+    uriParameters:
+      empId:
+        type: string
+        description: this id is used to uniquely identify the record to update
+    patch:
+      description: this endpoint is used to update the record
+      body:
+        application/json:
+          type: !include Types/updateType.raml
+      responses:
+        201:
+          body:
+            example: {"message": "record updated successfully"}
+    delete:
+      securedBy: basic
+      headers:
+        role:
+          enum:
+           - recuriter
+           - HR
+      description: this endpoint is used to delete or remove the record
+      responses:
+        200:
+          body:
+            example: {"message": "record deteled successfully"}
+      

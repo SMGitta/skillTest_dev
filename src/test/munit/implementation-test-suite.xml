@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-test-suite.xml" />
+	<munit:test name="implementation-test-suite-deleteflowTest" doc:id="1fbb19e4-c5d9-46de-9b81-bf7e5830f930" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="2e5a5c45-41bf-4a12-bba6-6ebe1012757d" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="494c11cb-62ac-4b0d-b96f-703cc61ab6be" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to deleteflow" doc:id="e8da15a3-ac7e-4e8b-b7d7-99685589477b" name="deleteflow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="105e58f6-d7cf-4d16-a656-5351b489c87a" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="e79dbe30-cb40-4f8a-9ee8-f77aa907d99f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="implementation-test-suite-postflowTest" doc:id="42388b19-c78b-47ad-b716-e93f29604c77" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="1db96db0-2742-45d1-b28e-30e463abb40e" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="4c7f345b-d02d-404b-962d-6c0e762bcc3f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to postflow" doc:id="69051c99-2773-494e-8308-5a366d5b6156" name="postflow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="1baecb92-6d6e-44f4-9934-61382b04b628" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f0af1237-22b8-48c8-b6c6-e3b52c40a29d" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="implementation-test-suite-patchflowTest" doc:id="4b4db478-d25e-4269-bed9-64a99a75b1f1" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="036e34aa-cc97-461e-be19-5905bce35977" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a1830c65-d737-4d7d-8d9d-dc0c7d24d260" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to patchflow" doc:id="b2cd4f63-4080-4d00-9b5b-f9e0dbdeda5e" name="patchflow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="2065ba23-be89-45b2-9a91-f60bdd611b4d" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="294bbda5-1758-4843-9e4d-8796dc91aa1b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+</mule>

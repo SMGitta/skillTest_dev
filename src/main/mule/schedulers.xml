@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="schedulersFlow" doc:id="2c7e44b4-e948-4867-b166-8eb2b26640fb" >
+		<scheduler doc:name="Scheduler" doc:id="f93a5b10-1fa6-4995-b67d-7e363af30f50" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="24" timeUnit="HOURS" />
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="b15fbe52-bcd7-4e67-b3ea-1a0487bc94e7" message="Sending request to HR sapi to fetch staff data"/>
+		<http:request method="GET" doc:name="Request" doc:id="d6f8ae49-a9d1-4a5a-8e02-2658d8bc5c8e" config-ref="HTTP_Request_configuration" url="${hrsapi.host}/${hrsapi.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="db50b361-5d01-46fa-8453-795583b8b4ed" message="Staff data fetched from HRsapi"/>
+	</flow>
+</mule>
