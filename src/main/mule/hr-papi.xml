@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
     <configuration-properties doc:name="Configuration properties" doc:id="74232b9b-eafe-4bd2-9d76-f916882dfcff" file="properties/${env}.properties" />
     <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="7ae4f375-3f27-4608-898e-c72e36121378" />
     <configuration doc:name="Configuration" doc:id="e90466c7-eff7-42d5-9e80-f695ea0f9068" defaultErrorHandler-ref="globalerrorhandlerError_Handler" />
-	<api-gateway:autodiscovery apiId="${api.autodiscovery}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="d60e3490-0cb2-4498-9de7-acd74af54e71" flowRef="hr-papi-main" />
+	<!--  <api-gateway:autodiscovery apiId="${api.autodiscovery}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="d60e3490-0cb2-4498-9de7-acd74af54e71" flowRef="hr-papi-main" />   -->
 	<flow name="hr-papi-main">
         <http:listener config-ref="hr-papi-httpListenerConfig" path="${http.path}/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
